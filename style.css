@@ -1,0 +1,13 @@
+.layout-container{
+    width: min(100px, 100%);
+    margin: 0 auto;
+    columns: 3 500px;
+    column-gap: 1em;
+}
+
+.img{
+    display:block;
+    margin: 1em;
+    width: 100%;
+}
+
