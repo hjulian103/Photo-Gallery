@@ -9,7 +9,7 @@
     }
     100% {
         box-shadow: 0 0 0px 0px #ffe066, 0 4px 32px rgba(60,60,120,0.18);
-        border-bottom-color: #b6b9ff;
+        border-bottom-color: #ffffff;
     }
 }
 /*
@@ -18,7 +18,7 @@
 .background-container {
     min-height: 100vh;
     width: 100vw;
-    background: linear-gradient(120deg, #8496d1 0%, #ababb6 100%);
+    background: linear-gradient(120deg, #000103 0%, #d5d5e1 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,18 +52,23 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 6px 32px rgba(60,60,120,0.22);
-    border-bottom: 4px solid #b6b9ff;
+    border-bottom: 4px solid #ffffff;
     transition: background 0.3s, box-shadow 0.3s;
 }
     .layout.header h1:hover {
     border-radius: 32px; /* Only border-radius animates, border thickness stays the same */
-    transition: border-radius 0.4s, border-bottom-color 0.4s;
+    transition: border-radius 0.4s, border-bottom-color 0.4s, background 0.4s;
     border-bottom-color: #ff6f61; /* Vibrant coral color on hover */
+    background: linear-gradient(90deg, #ff6f61 0%, #ffe066 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-emphasis-color: transparent;
     }
 
 .layout.header p{
     font-size: 1.1rem;
-    color: #e4e4e7;
+    color: #f8f8f8;
         background: #5a5a8c ; /* Gradient background for paragraph */
         border-radius: 14px; /* Rounded corners for paragraph background */
         padding: 1em 1em; /* Padding for paragraph */
