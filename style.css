@@ -1,38 +1,236 @@
-.gallery-item:nth-child(1) { width: 320px; }
-.gallery-item:nth-child(2) { width: 220px; }
-.gallery-item:nth-child(3) { width: 280px; }
-.gallery-item:nth-child(4) { width: 180px; }
-.gallery-item:nth-child(5) { width: 260px; }
-.gallery-item:nth-child(6) { width: 350px; }
-.gallery-item:nth-child(7) { width: 400px; }
-.gallery-item:nth-child(8) { width: 240px; }
-.gallery-item:nth-child(9) { width: 300px; }
-.gallery-item:nth-child(10) { width: 200px; }
-.gallery-item:nth-child(11) { width: 270px; }
-.layout-container{
-    width: min(100px, 100%);
-    margin: 0 auto;
-    columns: 3 500px;
-    column-gap: 1em;
+@keyframes borderGlow {
+    0% {
+        box-shadow: 0 0 0px 0px #ffe066, 0 4px 32px rgba(60,60,120,0.18);
+        border-bottom-color: #b6b9ff;
+    }
+    50% {
+        box-shadow: 0 0 24px 8px #ffe066, 0 4px 32px rgba(60,60,120,0.18);
+        border-bottom-color: #ffe066;
+    }
+    100% {
+        box-shadow: 0 0 0px 0px #ffe066, 0 4px 32px rgba(60,60,120,0.18);
+        border-bottom-color: #b6b9ff;
+    }
+}
+/*
+ * Background container for main content
+ */
+.background-container {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(120deg, #8496d1 0%, #ababb6 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
-.img{
-    display: block;
-    margin: 1em;
+/* Stylize header text */
+.layout.header h1 {
+    transition: border-bottom-color 0.4s, box-shadow 0.4s, border-radius 0.4s;
+    animation: borderGlow 1.2s ease-in-out;
+    border-bottom-color: #ffe066;
+    border-radius: 32px; /* Animate border-radius on hover for a soft effect */
+    font-size: 5rem;
+    color: #2a296c;
+    background: whitesmoke;
+    border-radius: 16px;
+    padding: 0.4em 0.2em;
+    margin: 1em auto;
+    box-shadow: 0 4px 32px rgba(60,60,120,0.18);
+    max-width: 700px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-align: center;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 6px 32px rgba(60,60,120,0.22);
+    border-bottom: 4px solid #b6b9ff;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+    .layout.header h1:hover {
+    border-radius: 32px; /* Only border-radius animates, border thickness stays the same */
+    transition: border-radius 0.4s, border-bottom-color 0.4s;
+    border-bottom-color: #ff6f61; /* Vibrant coral color on hover */
+    }
+
+.layout.header p{
+    font-size: 1.1rem;
+    color: #e4e4e7;
+        background: #5a5a8c ; /* Gradient background for paragraph */
+        border-radius: 14px; /* Rounded corners for paragraph background */
+        padding: 1em 1em; /* Padding for paragraph */
+    margin: 2.5em auto; /* Increased top margin to raise paragraph higher on the page */
+        box-shadow: 0 2px 16px rgba(60,60,120,0.10); /* Subtle box shadow for paragraph */
+        max-width: 600px; /* Maximum width for paragraph */
+        font-weight: 500; /* Semi-bold font weight for paragraph */
+        letter-spacing: 0.05em; /* Slight letter spacing for readability */
+        text-align: center; /* Center the paragraph text */
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif; /* Font family for paragraph */
+        transition: background 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Stylize body text */
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #444466;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.layout.main p, .layout.main {
+    font-size: 1.35rem;
+    color: #3a3a6c;
+    background: linear-gradient(90deg, #f8f8fa 60%, #e0e7ff 100%);
+    border-radius: 18px;
+    padding: 1.2em 2em;
+    margin: 1.5em auto 2em auto;
+    box-shadow: 0 4px 24px rgba(60,60,120,0.10);
+    max-width: 700px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+    transition: background 0.3s, box-shadow 0.3s;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+
+
+.layout.footer {
+    font-size: 1rem;
+    color: #8888aa;
+    text-align: center;
+    margin-top: 2em;
+}
+/*
+ * .layout-container styles the main gallery area.
+ * - Sets a max width and centers the gallery.
+ * - Uses CSS columns for a masonry-like layout, with a randomized column count for responsiveness.
+ * - Adds padding, background, rounded corners, and shadow for a modern look.
+ */
+.layout-container {
+    width: min(1800px, 99vw);
+    overflow: hidden;
+    margin: 2em auto;
+    padding: 2em 1em;
+    background: linear-gradient(135deg, #f8f8fa 60%, #e0e7ff 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 40px 0 rgba(60,60,120,0.12), 0 1.5px 8px 0 rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s;
+}
+
+.gallery {
+    columns: 5 400px;
+    column-gap: 2em;
+}
+
+
+@media (max-width: 1000px) {
+    .gallery {
+        columns: 3 340px;
+    }
+}
+
+@media (max-width: 700px) {
+    .gallery {
+        columns: 2 240px;
+    }
+}
+
+
+/*
+ * .img, .gallery-item styles each image in the gallery.
+ * - Makes images block-level and adds spacing below.
+ * - Sets a default max-width for medium/large images.
+ * - Adds rounded corners and subtle shadow.
+ * - Adds hover effects for interactivity.
+ */
+
+ .img, .gallery-item {
+    display: block;    margin-bottom: 1.5em;
     width: 100%;
-}
-
-/* Gallery item styling and hover animation */
-.gallery-item {
+    /* Ensure images wrap and do not overflow columns */
+    max-width: 300px;
+    min-width: 180px;
+    box-sizing: border-box;
     border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
     cursor: pointer;
+    margin-left: 12px;
+    margin-right: -12px;
+    /* Scatter effect: random rotation and translation for each image */
 }
 
-.gallery-item:hover {
-    transform: scale(1.04) translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+.gallery-item:nth-child(1) {
+    transform: rotate(-3deg) translate(-10px, 8px);
+}
+.gallery-item:nth-child(2) {
+    transform: rotate(2deg) translate(12px, -6px);
+}
+.gallery-item:nth-child(3) {
+    transform: rotate(-5deg) translate(-18px, 14px);
+}
+.gallery-item:nth-child(4) {
+    transform: rotate(4deg) translate(16px, -10px);
+}
+.gallery-item:nth-child(5) {
+    transform: rotate(-2deg) translate(-8px, 10px);
+}
+.gallery-item:nth-child(6) {
+    transform: rotate(6deg) translate(20px, -12px);
+}
+.gallery-item:nth-child(7) {
+    transform: rotate(-4deg) translate(-14px, 16px);
+}
+.gallery-item:nth-child(8) {
+    transform: rotate(3deg) translate(10px, -8px);
+}
+.gallery-item:nth-child(9) {
+    transform: rotate(-6deg) translate(-22px, 18px);
+}
+.gallery-item:nth-child(10) {
+    transform: rotate(5deg) translate(18px, -14px);
+}
+.gallery-item:nth-child(11) {
+    transform: rotate(-2deg) translate(-8px, 12px);
+}
+.gallery-item:nth-child(12) {
+    transform: rotate(4deg) translate(14px, -10px);
+}
+.gallery-item:nth-child(13) {
+    transform: rotate(-3deg) translate(-10px, 8px);
+}
+.gallery-item:nth-child(14) {
+    transform: rotate(2deg) translate(12px, -6px);
+} 
+.gallery-item:nth-child(15) {
+    transform: rotate(-5deg) translate(-18px, 14px);
+}
+.gallery-item:nth-child(16) {
+    transform: rotate(3deg) translate(10px, -8px);
+}
+
+
+/*
+ * Randomize image sizes for a dynamic gallery look:
+ * - Every 3rd image: max-width 260px
+ * - Every 4th image: max-width 200px
+ * - Every 5th image: max-width 300px
+ */
+
+
+.img:hover, .gallery-item:hover {
+    transform: scale(1.10) translateY(-8px) !important;
+    box-shadow: 0 0 0 6px #e4dad9, 0 8px 32px rgba(0,0,0,0.18); /* Add colored glow to border radius on hover */
     filter: brightness(1.08) saturate(1.2);
 }
 
