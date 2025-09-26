@@ -1,3 +1,13 @@
+/* Ensure img.mal goes behind the header paragraph when overlapping */
+.layout.header p {
+    position: relative;
+    z-index: 2;
+}
+img.mal {
+    position: relative;
+    z-index: 1;
+    /* Optionally add pointer-events: none; if you want the paragraph to always be clickable above the image */
+}
 @keyframes borderGlow {
     0% {
         box-shadow: 0 0 0px 0px #fcfcfc, 0 4px 32px rgba(60,60,120,0.18);
@@ -32,17 +42,13 @@
 
 /* Stylize header text */
 .layout.header h1 {
-    transition: border-bottom-color 0.4s, box-shadow 0.4s, border-radius 0.4s;
-    animation: borderGlow 1.2s ease-in-out;
-    border-bottom-color: #c37ecf;
     border-radius: 32px; /* Animate border-radius on hover for a soft effect */
     font-size: 5rem;
     color: #2a296c;
-    background: whitesmoke;
+    background: transparent;
     border-radius: 16px;
     padding: 0.4em 0.2em;
     margin: 1em auto;
-    box-shadow: 0 4px 32px rgba(60,60,120,0.18);
     max-width: 700px;
     font-weight: 900;
     letter-spacing: 0.15em;
@@ -52,14 +58,12 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 6px 32px rgba(60,60,120,0.22);
-    border-bottom: 4px solid #ffffff;
-    transition: background 0.3s, box-shadow 0.3s;
 }
     .layout.header h1:hover {
     border-radius: 32px; /* Only border-radius animates, border thickness stays the same */
     transition: border-radius 0.4s, border-bottom-color 0.4s, background 0.4s;
-    border-bottom-color: #cf41e5; /* Vibrant coral color on hover */
-    background: linear-gradient(90deg, #ab329c 0%, #d984e8 100%);
+   /* border-bottom-color: #cf41e5; /* Vibrant coral color on hover */
+    /*background: linear-gradient(90deg, #ab329c 0%, #d984e8 100%);*/
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -72,7 +76,7 @@
         background: #5a5a8c ; /* Gradient background for paragraph */
         border-radius: 14px; /* Rounded corners for paragraph background */
         padding: 1em 1em; /* Padding for paragraph */
-    margin: 2.5em auto; /* Increased top margin to raise paragraph higher on the page */
+    margin: 1.5em auto; /* Increased top margin to raise paragraph higher on the page */
         box-shadow: 0 2px 16px rgba(60,60,120,0.10); /* Subtle box shadow for paragraph */
         max-width: 600px; /* Maximum width for paragraph */
         font-weight: 500; /* Semi-bold font weight for paragraph */
@@ -80,6 +84,18 @@
         text-align: center; /* Center the paragraph text */
         font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif; /* Font family for paragraph */
         transition: background 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Add this to ensure header letters are visible and animatable */
+.layout.header h1 .letter {
+  display: inline-block;
+  will-change: transform, opacity;
+  color: #ffffff;
+  /* Remove text-fill-color and background-clip for animation */
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  text-shadow: none;
 }
 
 /* Stylize body text */
@@ -148,25 +164,63 @@ body {
 }
 
 @media (max-width: 700px) {
+    .img-modal {
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+    }
+    .img-modal-content {
+        max-width: 96vw !important;
+        max-height: 70vh !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: relative;
+    }
     .gallery {
-        columns: 1 100vw;
+        columns: 1;
+        column-gap: 0;
+        width: 100vw;
+        padding: 0 0.5em;
     }
     .img, .gallery-item {
-        max-width: 98vw;
-        min-width: 80vw;
+        max-width: 96vw;
+        min-width: 90vw;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 1.2em;
+        box-sizing: border-box;
     }
     .layout-container {
-        padding: 0.5em 0.2em;
+        padding: 0.5em 0.1em;
+        width: 100vw;
+        border-radius: 0;
+        box-shadow: none;
     }
     .layout.header h1 {
-        font-size: 2.2rem;
+        font-size: 1.5rem;
         padding: 0.2em 0.1em;
+        max-width: 98vw;
+        word-break: break-word;
     }
     .layout.header p {
         font-size: 0.95rem;
         padding: 0.7em 0.5em;
+        max-width: 98vw;
+        word-break: break-word;
+    }
+    .layout.main p, .layout.main {
+        font-size: 1rem;
+        padding: 0.7em 0.5em;
+        max-width: 98vw;
+        border-radius: 10px;
+        margin: 1em auto;
     }
 }
 
@@ -208,6 +262,84 @@ body {
     margin-right: -12px;
     /* Scatter effect: random rotation and translation for each image */
 }
+
+/* Zoom on hover (JS toggles .zoomed) */
+.gallery-item.zoomed {
+    transform: scale(1.18) translateY(-8px) !important;
+    z-index: 2;
+    box-shadow: 0 0 0 8px #ffe066, 0 8px 32px rgba(0,0,0,0.22);
+    transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+}
+
+/* Lightbox pop-in animation */
+.img-modal-content.pop-in {
+    animation: popIn 0.38s cubic-bezier(.4,2,.6,1);
+}
+
+/* Modal overlay for image popup */
+.img-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(2px);
+    padding: 0;
+}
+
+.img-modal-content {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px 0 rgba(60,60,120,0.22);
+    background: #fff;
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+
+
+.img-modal-close {
+    position: absolute;
+    top: 2.5vh;
+    right: 4vw;
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1010;
+    text-shadow: 0 2px 8px #000;
+    transition: color 0.2s;
+}
+.img-modal-close:hover {
+    color: #b57bad;
+}
+
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
 .gallery-item:nth-child(1) {
     transform: rotate(-3deg) translate(-10px, 8px);
