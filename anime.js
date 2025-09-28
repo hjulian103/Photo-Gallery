@@ -70,46 +70,124 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof anime === 'undefined') return;
-    const gallery = document.querySelector('.gallery');
-    if (!gallery) return;
-    const images = document.querySelectorAll('.gallery-item');
-
-    function handleMove(x, y) {
-        const rect = gallery.getBoundingClientRect();
-        const mouseX = x - rect.left;
-        const mouseY = y - rect.top;
-        images.forEach((img, i) => {
-            // Push each image away from the pointer, with some random offset
-            const imgRect = img.getBoundingClientRect();
-            const imgCenterX = imgRect.left + imgRect.width / 2 - rect.left;
-            const imgCenterY = imgRect.top + imgRect.height / 2 - rect.top;
-            const dx = imgCenterX - mouseX;
-            const dy = imgCenterY - mouseY;
-            const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-            const repulseStrength = (0.7 + Math.random() * 0.3) * (120 / dist); // Stronger when closer
-            anime({
-                targets: img,
-                translateX: dx * repulseStrength,
-                translateY: dy * repulseStrength,
-                duration: 320,
-                easing: 'easeOutQuad'
-            });
+    // Repulse utility function
+    function repulse(target, mouseX, mouseY, containerRect) {
+        const imgRect = target.getBoundingClientRect();
+        const imgCenterX = imgRect.left + imgRect.width / 2 - containerRect.left;
+        const imgCenterY = imgRect.top + imgRect.height / 2 - containerRect.top;
+        const dx = imgCenterX - mouseX;
+        const dy = imgCenterY - mouseY;
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+        const repulseStrength = (0.7 + Math.random() * 0.3) * (120 / dist);
+        anime({
+            targets: target,
+            translateX: dx * repulseStrength,
+            translateY: dy * repulseStrength,
+            duration: 320,
+            easing: 'easeOutQuad'
         });
     }
 
-    gallery.addEventListener('mousemove', function(e) {
-        handleMove(e.clientX, e.clientY);
-    });
-    gallery.addEventListener('touchstart', function(e) {
-        if (e.touches && e.touches.length > 0) {
-            handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    // Repulse for main gallery
+    const gallery = document.querySelector('.gallery');
+    if (gallery) {
+        const images = gallery.querySelectorAll('.gallery-item');
+        function handleMove(x, y) {
+            const rect = gallery.getBoundingClientRect();
+            const mouseX = x - rect.left;
+            const mouseY = y - rect.top;
+            images.forEach((img) => {
+                repulse(img, mouseX, mouseY, rect);
+            });
         }
-    }, { passive: false });
-    gallery.addEventListener('touchmove', function(e) {
-        if (e.touches && e.touches.length > 0) {
-            handleMove(e.touches[0].clientX, e.touches[0].clientY);
+        gallery.addEventListener('mousemove', function(e) {
+            handleMove(e.clientX, e.clientY);
+        });
+        gallery.addEventListener('touchstart', function(e) {
+            if (e.touches && e.touches.length > 0) {
+                handleMove(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: false });
+        gallery.addEventListener('touchmove', function(e) {
+            if (e.touches && e.touches.length > 0) {
+                handleMove(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: false });
+    }
+    // Repulse for portraits-gallery
+    const portraitsGallery = document.querySelector('.portraits-gallery');
+    if (portraitsGallery) {
+        const images = portraitsGallery.querySelectorAll('.gallery-item');
+        // Only target the .portraits-preview inside the same card as the gallery
+        function getPreviewTarget() {
+            // Look for closest .portraits-card ancestor, then find .portraits-preview inside
+            let parent = portraitsGallery.parentElement;
+            while (parent && !parent.classList.contains('portraits-card')) {
+                parent = parent.parentElement;
+            }
+            if (parent) {
+                // Only return the preview if it is visible (not display: none)
+                const preview = parent.querySelector('.portraits-preview');
+                if (preview && preview.offsetParent !== null) {
+                    return preview;
+                }
+            }
+            return null;
         }
-    }, { passive: false });
+        function handleMove(x, y) {
+            const rect = portraitsGallery.getBoundingClientRect();
+            const mouseX = x - rect.left;
+            const mouseY = y - rect.top;
+            images.forEach((img) => {
+                repulse(img, mouseX, mouseY, rect);
+            });
+            // Repulse effect for preview image in the same card
+            const preview = getPreviewTarget();
+            if (preview) {
+                repulse(preview, mouseX, mouseY, rect);
+            }
+        }
+        function resetTransforms() {
+            images.forEach(img => {
+                anime({
+                    targets: img,
+                    translateX: 0,
+                    translateY: 0,
+                    duration: 320,
+                    easing: 'easeOutQuad'
+                });
+            });
+            const preview = getPreviewTarget();
+            if (preview) {
+                anime({
+                    targets: preview,
+                    translateX: 0,
+                    translateY: 0,
+                    duration: 320,
+                    easing: 'easeOutQuad'
+                });
+            }
+        }
+        portraitsGallery.addEventListener('mousemove', function(e) {
+            handleMove(e.clientX, e.clientY);
+        });
+        portraitsGallery.addEventListener('mouseleave', function() {
+            resetTransforms();
+        });
+        portraitsGallery.addEventListener('touchstart', function(e) {
+            if (e.touches && e.touches.length > 0) {
+                handleMove(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: false });
+        portraitsGallery.addEventListener('touchend', function() {
+            resetTransforms();
+        }, { passive: false });
+        portraitsGallery.addEventListener('touchmove', function(e) {
+            if (e.touches && e.touches.length > 0) {
+                handleMove(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: false });
+    }
 });
 
 // Animate the 'Photo Gallery' header text on page load using anime.js
@@ -144,3 +222,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     animateLetters();
 });
+// Toggle portraits folder open/close
+document.addEventListener('DOMContentLoaded', function() {
+    var folder = document.getElementById('portraitsFolder');
+    var gallery = document.getElementById('portraitsGallery');
+    var icon = document.getElementById('portraitsFolderIcon');
+    var open = false;
+    if (!folder || !gallery) return;
+    folder.style.cursor = 'pointer';
+    folder.onclick = function() {
+        open = !open;
+        gallery.style.display = open ? 'flex' : 'none';
+        icon && (icon.textContent = open ? '\uD83D\uDCC1' : '\uD83D\uDCC1');
+        folder.classList.toggle('open', open);
+        if (open) {
+            folder.classList.remove('open'); // restart animation
+            void folder.offsetWidth;
+            folder.classList.add('open');
+        }
+    };
+});
+document.addEventListener('DOMContentLoaded', function() {
+        var folder = document.getElementById('portraitsFolder');
+        var modal = document.getElementById('portraitsModal');
+        var closeBtn = document.getElementById('portraitsModalClose');
+        if (folder && modal && closeBtn) {
+            folder.onclick = function() {
+                modal.style.display = 'flex';
+            };
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        }
+    });

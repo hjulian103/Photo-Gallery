@@ -19,23 +19,37 @@
             <div class="layout.container">
                 <div class="gallery">
                     <img width="300px" src="imgs/bld_moon.JPG"  class="gallery-item">
-                    <img width="250px" src="imgs/cov.jpg"  class="gallery-item">
                     <img width="250px" src="imgs/falcon.JPG"  class="gallery-item">
                     <img width="200px" src="imgs/flower.JPG"  class="gallery-item">
-                    <img width="200px" src="imgs/mal_orb.jpg"  class="gallery-item">
-                    <img width="300px" src="imgs/mal.JPG"  class="gallery-item">
-                    <img width="500px" src="imgs/mila.JPG"  class="gallery-item">
-                    <img width="450px" src="imgs/ron_mal.JPG"  class="gallery-item">
-                    <img width="350px" src="imgs/ron.JPG"  class="gallery-item">
                     <img width="500px" src="imgs/sagey.JPG"  class="gallery-item">
-                    <img width="350px" src="imgs/statue.JPG"  class="gallery-item">
                     <img width="250px" src="imgs/bird.jpg"  class="gallery-item">
                     <img width="300px" src="imgs/footbll-1.jpeg"  class="gallery-item">
                     <img width="400px" src="imgs/s_board.JPG"  class="gallery-item">
-                    <img width="300px" src="imgs/mirror.png"  class="gallery-item">
-                    <img width="400px" src="imgs/sun_mila.JPG"  class="gallery-item">
+                    <div class="portraits-card">
+                        <div class="portraits-folder" id="portraitsFolder">
+                            <div class="portraits-preview-wrapper" style="position:relative;display:inline-block;width:100%;">
+                                <img src="imgs/portraits/mirror.png" alt="Portraits Preview" class="portraits-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
+                                <h2 class="portraits-folder-label" id="portraitsFolderLabel" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0.3em 1.2em;border-radius:14px;font-size:2.1rem;">Portraits</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Image Popup Modal -->
+                <!-- Portraits Modal Popup -->
+                <div id="portraitsModal" class="img-modal" style="display:none;">
+                    <span class="img-modal-close" id="portraitsModalClose">&times;</span>
+                    <div class="portraits-modal-content">
+                        <img width="250px" src="imgs/portraits/cov.jpg"  class="gallery-item">
+                        <img width="200px" src="imgs/portraits/mal_orb.jpg"  class="gallery-item">
+                        <img width="300px" src="imgs/portraits/mal.JPG"  class="gallery-item">
+                        <img width="500px" src="imgs/portraits/mila.JPG"  class="gallery-item">
+                        <img width="450px" src="imgs/portraits/ron_mal.JPG"  class="gallery-item">
+                        <img width="350px" src="imgs/portraits/ron.JPG"  class="gallery-item">
+                        <img width="350px" src="imgs/portraits/statue.JPG"  class="gallery-item">
+                        <img width="300px" src="imgs/portraits/mirror.png"  class="gallery-item">
+                        <img width="400px" src="imgs/portraits/sun_mila.JPG"  class="gallery-item">
+                    </div>
+                </div>
                 <div id="imgModal" class="img-modal" style="display:none;">
                     <span class="img-modal-close" id="imgModalClose">&times;</span>
                     <img class="img-modal-content" id="imgModalImg" src="" alt="">
@@ -47,6 +61,7 @@
             <p>&copy; 2025 Julian's Gallery</p>
         </footer>
     </div>
-    <script src="anime.js"></script>
+        <script src="anime.js"></script>
+    
 </body>
 </html>

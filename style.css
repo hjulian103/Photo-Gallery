@@ -1,3 +1,171 @@
+/* Portraits folder preview image styling */
+
+.portraits-preview,
+.portraits-card {
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin: 0 auto 0.3em auto;
+    border-radius: 12px;
+}
+.portraits-preview {
+    object-fit: cover;
+}
+/* Portraits modal content columns layout */
+.portraits-modal-content {
+    columns: 3 220px;
+    column-gap: 2em;
+    max-width: 100vw;
+    max-height: 80vh;
+    margin: 5em auto;
+    padding: 3em 0.5em;
+    padding-right: 3em;
+    border-radius: 50px;
+    box-shadow: 0 8px 40px 0 rgba(60,60,120,0.22);
+    overflow-y: auto;
+    display: block;
+}
+.portraits-modal-content img {
+    width: 100%;
+    max-width: 220px;
+    margin-bottom: 1.2em;
+    display: block;
+    break-inside: avoid;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(60,60,120,0.10);
+}
+@media (max-width: 900px) {
+    .portraits-modal-content {
+        columns: 2 140px;
+        max-width: 98vw;
+        padding: 0.5em 0.1em;
+    }
+}
+@media (max-width: 600px) {
+    .portraits-modal-content {
+        columns: 1 98vw;
+        max-width: 99vw;
+        padding: 0.2em 0.05em;
+    }
+}
+/* Portraits folder (collapsible) styles */
+.portraits-folder {
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0.2em;
+    padding: 0.12em 0.35em;
+    border-radius: 5px;
+    background: none;
+    box-shadow: 0 2px 8px rgba(60,60,120,0.07);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+@keyframes folderPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.portraits-folder.open {
+    animation: folderPopIn 0.38s cubic-bezier(.4,2,.6,1);
+    background: linear-gradient(90deg, #ffe066 60%, #e0e7ff 100%);
+    box-shadow: 0 4px 16px rgba(255,224,102,0.13);
+}
+
+.portraits-folder-label {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2a296c;
+    letter-spacing: 0.07em;
+    margin: 0;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+.portraits-folder:hover .portraits-folder-label {
+    color: #ffffff;
+    transform: scale(1.08) translateY(-4px) rotate(-2deg);
+    animation: fadeInLabel 0.5s cubic-bezier(.4,2,.6,1);
+}
+
+@keyframes fadeInLabel {
+    0% {
+        opacity: 0;
+        filter: blur(6px);
+    }
+    60% {
+        opacity: 1;
+        filter: blur(1.5px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.portraits-gallery {
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+    overflow: hidden;
+    
+}
+/* Portraits container styles */
+.portraits-card {
+    background: transparent;
+    border-radius: 12px;
+    box-shadow: transparent;
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+}
+.portraits-card h2 {
+    font-size: 2.3rem;
+    color: transparent;
+    margin-bottom: 1.2em;
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    
+
+}
+.portraits-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em 1.5em;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 350px;
+    overflow-y: auto;
+    padding-bottom: 1em;
+    
+}
+    /* Remove custom portraits-gallery .gallery-item overrides so portraits images match main gallery images */
+    /* Portraits images now use .gallery-item styles only */
+
+
+    /* Portraits images now use .gallery-item:hover styles only *
+
+@media (max-width: 900px) {
+    .portraits-gallery {
+        gap: 1.2em 0.7em;
+    }
+    .portraits-container {
+        padding: 1.2em 0.2em 1.5em 0.2em;
+    }
+    .portraits-gallery .gallery-item {
+        max-width: 98vw;
+        min-width: 60vw;
+    }
+}
 /* Ensure img.mal goes behind the header paragraph when overlapping */
 .layout.header p {
     position: relative;
@@ -10,15 +178,15 @@ img.mal {
 }
 @keyframes borderGlow {
     0% {
-        box-shadow: 0 0 0px 0px #fcfcfc, 0 4px 32px rgba(60,60,120,0.18);
-        border-bottom-color: #b6b9ff;
+        box-shadow: 0 0 0px 0px #fcfcfc, 0 4px 32px rgba(255, 255, 255, 0.18);
+        border-bottom-color: #000000;
     }
     50% {
-        box-shadow: 0 0 24px 8px #d856e9, 0 4px 32px rgba(60,60,120,0.18);
-        border-bottom-color: #d966ff;
+        box-shadow: 0 0 24px 8px #ffffff, 0 4px 32px rgba(255, 255, 255, 0.18);
+        border-bottom-color: #000000;
     }
     100% {
-        box-shadow: 0 0 0px 0px #118df2, 0 4px 32px rgba(60,60,120,0.18);
+        box-shadow: 0 0 0px 0px #ffffff, 0 4px 32px rgba(0, 0, 0, 0.18);
         border-bottom-color: #ffffff;
     }
 }
@@ -267,7 +435,6 @@ body {
 .gallery-item.zoomed {
     transform: scale(1.18) translateY(-8px) !important;
     z-index: 2;
-    box-shadow: 0 0 0 8px #ffe066, 0 8px 32px rgba(0,0,0,0.22);
     transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
 }
 
