@@ -12,24 +12,42 @@
 <body>
     <div class="background-container">
     <header class="layout header">
-            <h1>Photo Gallery</h1>
+                        <div class="large centered row">
+                            <h1>Photo Gallery</h1>
             <p>A collection of some of my favorite shots!</p>
         </header>
         <main class="layout.main">
-            <div class="layout.container">
+            <div class="main-content-wrapper">
                 <div class="gallery">
-                    <img width="300px" src="imgs/bld_moon.JPG"  class="gallery-item">
-                    <img width="250px" src="imgs/falcon.JPG"  class="gallery-item">
-                    <img width="200px" src="imgs/flower.JPG"  class="gallery-item">
-                    <img width="500px" src="imgs/sagey.JPG"  class="gallery-item">
-                    <img width="250px" src="imgs/bird.jpg"  class="gallery-item">
-                    <img width="300px" src="imgs/footbll-1.jpeg"  class="gallery-item">
-                    <img width="400px" src="imgs/s_board.JPG"  class="gallery-item">
+                <div class="animals-card">
+                    <div class="animals-folder" id="animalsFolder">
+                        <div class="animals-preview-wrapper" style="position:relative;display:inline-block;width:100%;">
+                            <img src="imgs/animals/falcon.JPG" alt="Animals Preview" class="animals-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
+                            <h2 class="animals-folder-label" id="animalsFolderLabel" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0.3em 1.2em;border-radius:14px;font-size:2.1rem;">Animals</h2>
+                        </div>
+                    </div>
+                </div>
                     <div class="portraits-card">
                         <div class="portraits-folder" id="portraitsFolder">
                             <div class="portraits-preview-wrapper" style="position:relative;display:inline-block;width:100%;">
-                                <img src="imgs/portraits/mirror.png" alt="Portraits Preview" class="portraits-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
+                                <img src="imgs/portraits/sun_mila.JPG" alt="Portraits Preview" class="portraits-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
                                 <h2 class="portraits-folder-label" id="portraitsFolderLabel" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0.3em 1.2em;border-radius:14px;font-size:2.1rem;">Portraits</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="motion-card">
+                        <div class="motion-folder" id="motionFolder">
+                            <div class="motion-preview-wrapper" style="position:relative;display:inline-block;width:100%;">
+                                <img src="imgs/motion/footbll-1.jpeg" alt="Motion Preview" class="motion-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
+                                <h2 class="motion-folder-label" id="motionFolderLabel" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0.3em 1.2em;border-radius:14px;font-size:2.1rem;">Motion</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nature-card">
+                        <div class="nature-folder" id="natureFolder">
+                            <div class="nature-preview-wrapper" style="position:relative;display:inline-block;width:100%;">
+                                <img src="imgs/nature/flower.JPG" alt="Nature Preview" class="nature-preview" width="500" style="display:block;margin:0 auto 0.3em auto;max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,120,0.10);">
+                                <h2 class="nature-folder-label" id="natureFolderLabel" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0.3em 1.2em;border-radius:14px;font-size:2.1rem;">Nature</h2>
                             </div>
                         </div>
                     </div>
@@ -50,18 +68,42 @@
                         <img width="400px" src="imgs/portraits/sun_mila.JPG"  class="gallery-item">
                     </div>
                 </div>
+                <!-- Motion Modal Popup -->
+                <div id="motionModal" class="img-modal" style="display:none;">
+                    <span class="img-modal-close" id="motionModalClose">&times;</span>
+                    <div class="motion-modal-content">
+                        <img width="300px" src="imgs/motion/footbll-1.jpeg"  class="gallery-item">
+                        <img width="400px" src="imgs/motion/s_board.JPG"  class="gallery-item">
+                    </div>
+                </div>
+                <!-- Nature Modal Popup -->
+                <div id="natureModal" class="img-modal" style="display:none;">
+                    <span class="img-modal-close" id="natureModalClose">&times;</span>
+                    <div class="nature-modal-content">
+                        <img width="300px" src="imgs/nature/flower.JPG"  class="gallery-item">
+                        <img width="400px" src="imgs/nature/moon.JPG"  class="gallery-item">
+                        <img width="400px" src="imgs/nature/bld_moon.JPG"  class="gallery-item">
+                    </div>
+                </div>
+                <!-- Animals Modal Popup -->
+                <div id="animalsModal" class="img-modal" style="display:none;">
+                    <span class="img-modal-close" id="animalsModalClose">&times;</span>
+                    <div class="animals-modal-content">
+                        <img width="250px" src="imgs/animals/falcon.JPG"  class="gallery-item">
+                        <img width="500px" src="imgs/animals/sagey.JPG"  class="gallery-item">
+                        <img width="250px" src="imgs/animals/bird.jpg"  class="gallery-item">
+                    </div>
+                </div>
                 <div id="imgModal" class="img-modal" style="display:none;">
                     <span class="img-modal-close" id="imgModalClose">&times;</span>
                     <img class="img-modal-content" id="imgModalImg" src="" alt="">
                     <div id="imgModalCaption" class="img-modal-caption"></div>
                 </div>
-            </div>
-        </main>
-        <footer class="layout.footer">
-            <p>&copy; 2025 Julian's Gallery</p>
-        </footer>
-    </div>
+            
+    </main>
         <script src="anime.js"></script>
-    
+    <footer>
+                    <p>&copy; 2025 Photo Gallery. All rights reserved.</p>
+                </footer>
 </body>
 </html>

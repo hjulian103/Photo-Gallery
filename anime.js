@@ -1,3 +1,28 @@
+// Touch event for folder label highlight (matches hover effect)
+document.addEventListener('DOMContentLoaded', function() {
+    const folderLabels = [
+        { folder: 'motionFolder', label: 'motionFolderLabel' },
+        { folder: 'natureFolder', label: 'natureFolderLabel' },
+        { folder: 'animalsFolder', label: 'animalsFolderLabel' }
+    ];
+    folderLabels.forEach(({ folder, label }) => {
+        const folderEl = document.getElementById(folder);
+        const labelEl = document.getElementById(label);
+        if (folderEl && labelEl) {
+            folderEl.addEventListener('touchstart', function() {
+                labelEl.classList.add('touch-active');
+            }, { passive: true });
+            folderEl.addEventListener('touchend', function() {
+                labelEl.classList.remove('touch-active');
+            }, { passive: true });
+            folderEl.addEventListener('touchcancel', function() {
+                labelEl.classList.remove('touch-active');
+            }, { passive: true });
+        }
+    });
+});
+// 3D Flip Animation for Photo Gallery Heading
+
 // Zoom on Hover and Lightbox Animation for Gallery Images with touch support
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -193,54 +218,33 @@ document.addEventListener('DOMContentLoaded', function() {
 // Animate the 'Photo Gallery' header text on page load using anime.js
 // Each letter does a full rotation and bounces when landing
 
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof anime === 'undefined') {
-        console.warn('anime.js not loaded. Please include anime.min.js in your HTML.');
-        return;
-    }
-    var header = document.querySelector('.layout.header h1');
-    if (!header) return;
-    // Split text into spans for each letter
-    var text = header.textContent;
-    header.innerHTML = text.split('').map(function(char) {
-        if (char === ' ') return '<span class="letter">&nbsp;</span>';
-        return '<span class="letter">' + char + '</span>';
-    }).join('');
-    var letters = header.querySelectorAll('.letter');
-    function animateLetters() {
-        anime({
-            targets: letters,
-            keyframes: [
-                { translateY: '-2.75rem', rotate: '1turn', easing: 'easeOutExpo', duration: 600 },
-                { translateY: 0, rotate: '0turn', easing: 'easeOutBounce', duration: 800 }
-            ],
-            delay: anime.stagger(50),
-            complete: function() {
-                setTimeout(animateLetters, 1000);
-            }
-        });
-    }
-    animateLetters();
-});
+
 // Toggle portraits folder open/close
+// Toggle folder modals for portraits, motion, and nature
 document.addEventListener('DOMContentLoaded', function() {
-    var folder = document.getElementById('portraitsFolder');
-    var gallery = document.getElementById('portraitsGallery');
-    var icon = document.getElementById('portraitsFolderIcon');
-    var open = false;
-    if (!folder || !gallery) return;
-    folder.style.cursor = 'pointer';
-    folder.onclick = function() {
-        open = !open;
-        gallery.style.display = open ? 'flex' : 'none';
-        icon && (icon.textContent = open ? '\uD83D\uDCC1' : '\uD83D\uDCC1');
-        folder.classList.toggle('open', open);
-        if (open) {
-            folder.classList.remove('open'); // restart animation
-            void folder.offsetWidth;
-            folder.classList.add('open');
+    // Helper to wire up modal open/close for a folder
+    function setupFolderModal(folderId, modalId, closeId) {
+        var folder = document.getElementById(folderId);
+        var modal = document.getElementById(modalId);
+        var closeBtn = document.getElementById(closeId);
+        if (folder && modal && closeBtn) {
+            folder.onclick = function() {
+                modal.style.display = 'flex';
+            };
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+            };
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
         }
-    };
+    }
+    setupFolderModal('portraitsFolder', 'portraitsModal', 'portraitsModalClose');
+    setupFolderModal('motionFolder', 'motionModal', 'motionModalClose');
+    setupFolderModal('natureFolder', 'natureModal', 'natureModalClose');
+    setupFolderModal('animalsFolder', 'animalsModal', 'animalsModalClose');
 });
 document.addEventListener('DOMContentLoaded', function() {
         var folder = document.getElementById('portraitsFolder');
